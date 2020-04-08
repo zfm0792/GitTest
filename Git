@@ -55,6 +55,9 @@ Git
 	暂存区:stage或index 一般存放在".git目录下"的index文件(.git/index)
 	版本库:工作区有一个隐藏目录.git 
 
+	在Git中 HEAD表示当前版本  HEAD^ 上一个版本   HEAD^^ 上上一个版本
+		git reset :回退到某一个版本
+
 六、Git创建仓库
 	
 	git init:初始化一个Git仓库
@@ -75,10 +78,10 @@ Git
 			repo：git仓库
 			directory：本地目录
 	eg:
-	克隆Ruby语言的Git代码仓库Grit
-		git clone git://github.com/schacon/grit.git
-	克隆到自己定义的新建目录
-		git clone git://github.com/schacon/grit.git mygrit
+		克隆Ruby语言的Git代码仓库Grit
+			git clone git://github.com/schacon/grit.git
+		克隆到自己定义的新建目录
+			git clone git://github.com/schacon/grit.git mygrit
 
 七、Git基本操作
 
@@ -105,4 +108,14 @@ Git
 			注:如果没有加-m选项，Git会尝试为你打开一个编辑器以填写提交信息
 				如果在配置中找不到相关的信息，默认会打开vim
 
-		
+		git reset HEAD: 取消已缓存的内容
+			取消之前git add的内容
+
+		git rm：从git中移除某个文件
+			git rm <file>
+			git rm -f <file>：删除之前修改过且已经放入暂存区域  -f：强制删除
+			git rm --cached <file>：把文件从暂存区移除，但任然希望保留在当前工作目录
+
+		git log : 显示从最近到最远的提交日志
+			git log --pretty=oneline  一行显示
+

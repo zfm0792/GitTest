@@ -1,0 +1,108 @@
+Git
+
+一、什么是git
+	分布式版本控制软件
+	文件 --- 本地版本控制 --- 集中式版本控制(svn) --- 分布式版本控制(git)
+
+二、Git安装
+	官网: https://gitforwindows.org/
+	教程: https://blog.csdn.net/huangqqdy/article/details/83032408
+
+三、Git配置
+
+	简介
+		Git提供了一个叫做git config的工具，专门用来配置或读取相应的工作环境变量
+		这些环境决定了Git在各个环节的具体工作方式和行为
+
+	相关的配置文件
+		/etc/gitconfig
+			系统中对所有用户都普遍适用的配置   git config --system:读写的就是该配置文件
+		~/.gitconfig
+			用户目录下的配置文件只适用于该用户   git config --global:读写的就是该配置文件
+		.git/config
+			当前项目的Git目录下的配置文件   该配置仅对当前项目有效 
+
+		每一个级别的配置都会覆盖上层相同的配置 --- .git/config 里面的配置会覆盖 ~/.gitconfig中同名的变量
+
+	配置用户信息
+		git config --global user.name "fredzhan"
+		git config --global user.email "fredzhan@liteon.com"
+
+		注:使用--global,更改的配置文件就是位于用户主目录下的那个,以后所有的项目都会默认使用这里面的配置
+			如果要在某个特定的项目中使用其他名字或者电邮 去掉--global即可   新的设定就在.git/config下
+
+	配置文本编辑器
+		git config --global core.edit emacs
+		git config --global core.edit vim
+
+	差异分析工具:vimdiff,kdiff3,tkdiff,meld...
+		git config --global merge.tool vimdiff
+
+	查看配置信息
+		git config --list
+
+四、Git工作流程
+	1. 克隆Git资源作为工作目录
+	2. 在克隆的资源上添加或修改文件
+	3. 如果其他人修改了,可以更新资源
+	4. 在提交前查看修改
+	5. 提交修改
+	6. 修改完成后，如果发现错误，可以撤回提交并再次修改并提交
+
+五、Git工作区、暂存区和版本库
+	
+	工作区:就是你在电脑里看到的目录
+	暂存区:stage或index 一般存放在".git目录下"的index文件(.git/index)
+	版本库:工作区有一个隐藏目录.git 
+
+六、Git创建仓库
+	
+	git init:初始化一个Git仓库
+		git init命令执行后，Git仓库会生成一个.git目录，该目录包含了资源所有的元数据
+
+	使用当前目录作为Git仓库
+		git init
+	使用指定目录作为Git仓库
+		git init dirname
+	如果要将目录下的文件纳入版本控制
+		git add . / git add filename
+		git commit -m '初始化项目版本'
+
+	从现有Git仓库中拷贝项目
+		git clone <repo>
+	如果要克隆到指定的目录
+		git clone <repo> <directory>
+			repo：git仓库
+			directory：本地目录
+	eg:
+	克隆Ruby语言的Git代码仓库Grit
+		git clone git://github.com/schacon/grit.git
+	克隆到自己定义的新建目录
+		git clone git://github.com/schacon/grit.git mygrit
+
+七、Git基本操作
+
+	获取和创建项目命令
+		git init：在目录中创建新的Git仓库
+		git clone：拷贝一个 Git 仓库到本地，让自己能够查看该项目，或者进行修改。
+
+	基本快照
+		git add: 将指定文件放入到暂存区
+		git status: 查看项目的当前状态
+		git diff: 查看执行git status的结果的详细信息
+			gitdiff 命令显示已写入缓存与已修改但未写入缓存的改动区别
+
+			尚未缓存的改动:	 git diff
+			查看已缓存的改动: git diff --cached
+			查看已缓存的与未缓存的所有改动: git diff HEAD
+			显示摘要而非整个diff: git diff --stat
+
+		git commit:
+			git add 将想要快照的内容写入缓存区
+			git commit 将缓存区的内容添加到仓库中
+				git commit -m '注释内容'
+
+			注:如果没有加-m选项，Git会尝试为你打开一个编辑器以填写提交信息
+				如果在配置中找不到相关的信息，默认会打开vim
+
+		

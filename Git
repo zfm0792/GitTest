@@ -56,7 +56,14 @@ Git
 	版本库:工作区有一个隐藏目录.git 
 
 	在Git中 HEAD表示当前版本  HEAD^ 上一个版本   HEAD^^ 上上一个版本
-		git reset :回退到某一个版本
+		git reset --hard commit_id :回退到某一个版本
+		git log :查看提交历史，以便确定要回退到哪个版本
+		git reflog：查看命令历史，以便确定要回退到哪个版本
+
+	Git 跟踪文件  跟踪的是文件的修改
+		工作区 --> git add --> 暂存区 ---> git commit ---> 版本库
+		工作区 --> git add --> 暂存区 ---> git add --> 暂存区 --->git commit ---> 版本库
+
 
 六、Git创建仓库
 	
@@ -115,7 +122,34 @@ Git
 			git rm <file>
 			git rm -f <file>：删除之前修改过且已经放入暂存区域  -f：强制删除
 			git rm --cached <file>：把文件从暂存区移除，但任然希望保留在当前工作目录
+			如果文件已经被提交到版本库，则不用担心误删文件，但是你只能恢复文件到最新版本，会丢失最近一次提交后修改内容
 
 		git log : 显示从最近到最远的提交日志
 			git log --pretty=oneline  一行显示
 
+		git reset --hard commit_id :回退到某一指定版本
+		git log :查看提交历史，以便确定要回退到哪个版本
+		git reflog：查看命令历史，以便确定要回退到哪个版本
+
+	撤销修改
+		git checkout -- filename ：丢弃工作区的修改
+			git chekcout -- readme.txt： 把readme.txt文件在工作区的修改全部撤销
+				readme.txt自修改后还没有被放到暂存区  撤销修改就回到和版本库一模一样的状态
+				readme.txt已经添加到暂存区，又作了修改，撤销修改就回到添加暂存区后的状态
+
+			让文件回到最近一次git commit 或git add 时的状态
+
+		git reset HEAD <file>：可以把暂存区的修改撤销掉，重新放回工作区
+
+	注:
+		当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改 使用命令 git checkout -- file
+		当你改乱了工作区某个文件内容，还添加到了暂存区，向丢弃修改:git reset HEAD <file> 重复第一步
+		如果已经提交到了不合适的修改到版本库，可考虑版本回退
+
+八、分支管理
+	查看分支 git branch
+	创建分支 git branch <name>
+	切换分支 git checkout <name> 或者 git switch <name>
+	创建+切换分支 git checkout -b <name> 或者 git switch -c <name>
+	合并某分支到当前分支 git merge <name>
+	删除分支 git branch -d <name>

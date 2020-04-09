@@ -158,3 +158,109 @@ Git
 		当Git无法自动合并分支时，必须首先解决冲突。解决冲突后，再提交，合并完成
 		解决冲突的方法就是吧合并失败的文件手动编辑为我们想要的内容，再提交
 		用git log --graph 命令可以查看分支合并图
+
+	冲突产生的原因 :
+		master分支和创建的分支修改了同一行的内容  并且都提交到了仓库(master分支走在了创建的新分支的位置的前面) 在合并的时候 会产生冲突
+		在紧急修复bug基本上都会遇到该情形
+
+		bug紧急处理:
+			创建bug分支 然后修改好后  合并到master分支
+
+
+远程仓库
+	1. 注册GitHub账号
+	2. 创建仓库
+	3. 本地代码推送
+
+
+连接GitHub
+	ssh-keygen -t rsa -C "youremail@example.com"
+		youremail@example.com 为在GitHub上注册的邮箱
+		会在~/下生成.ssh文件夹  进入后打开id_rsa.pub文件  复制里面的key
+		回到GitHub 进入Account===>Setting 将key添加到SSH and GPG Keys中
+	ssh -T git@github.com  用于测试GitHub是否可以连接
+连接:
+	git remote add [shortname] [url]
+	git remote add origin https://github.com/zfm0792/GitTest.git
+
+推送内容到github
+	git push -u origin master
+	git push -u origin dev
+
+从github上拉代码
+	git clone [url]
+	git clone https://github.com/zfm0792/GitTest.git
+
+
+给远程仓库取别名
+	git remote add xxx [url]
+
+向远程推送代码
+	git push -u xxx 分支名称
+
+克隆远程仓库的代码
+	git clone [url]  (内部已经实现了取别名 origin)
+
+切换分支
+	git checkout 分支名称
+
+开发流程
+	将仓库代码拉下来 在第二天进行开发工作
+		切换到dev分支  			git checkout dev
+		将master分支合并到dev   git merge master
+		在本地开发了功能1       git add .
+								git commit -m "在公司开发的function1"
+		将代码提交到远程        git push origin dev  将代码提交到dev分支
+		回到家中				git checkout dev
+		将远程代码拉下来更新    git pull origin dev  将远程dev分支代码拉到本地
+		在家里开发功能2         git add .
+								git commit -m "在家开发function2"
+		将代码推送到远程		git push origin dev
+		第二天回到公司再拉代码  git pull origin dev
+
+	写完代码     推送到仓库
+	开始写代码   拉代码到本地
+
+
+
+到公司第一次获取代码
+	1. 克隆远程仓库代码
+		git clone 远程仓库地址 (内部已经实现git remote add origin 远程仓库地址)
+	2. 切换分支
+		git checkout 分支名称
+
+在公司开发
+	1. 切换到dev分支进行开发
+		git checkout dev
+	2. 把master分支合并到dev[仅执行一次]
+		git merge master
+	3. 修改代码
+	4. 提交代码
+		git add .
+		git commit -m 'xx'
+		git push origin dev
+
+回到家中继续写代码
+	1. 切换到dev分支
+		git checkout dev
+	2. 拉代码
+		git pull origin dev
+	3. 继续开发
+	4. 提交代码
+		git add .
+		git commit -m 'xx'
+		git push orgin dev
+
+开发完毕,要上线
+	1. 将dev分支合并到master分支
+		git checkout master
+		git merge dev // 本地
+		git push origin master // 远程
+		
+	2. 把dev分支推送到远程
+		git checkout dev
+		git merge master
+		git push origin dev
+
+
+
